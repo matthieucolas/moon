@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation d'Image de Fond</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .background {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('./moon-background.png'); /* Remplace par ton image */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            transition: transform 3s ease-in-out;
+        }
+        .frame{
+            /* background-color: #3C0D84; */
+            background: linear-gradient(0deg, rgba(26,8,46,1) 0%, rgba(60,13,132,1) 100%);
+        }
+        .txt{
+            position: absolute;
+            width: 40vw;
+            height: 40vh;
+        }
+        .circle {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            transition: all 4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="frame">
+    <div class="background" id="background">
+    </div>
+    <img class="txt" src="./txt.svg" alt="moon-background">
+
+    <script>
+        let bgX = 0, bgY = 0;
+
+        function animateBackground() {
+            const bg = document.getElementById("background");
+            const maxTranslateX = window.innerWidth * 0.5;
+            const maxTranslateY = window.innerHeight * 0.5;
+            const maxScale = 1.5;
+            const minScale = 0.8;
+            const maxRotation = 20;
+
+            bgX = (Math.random() * maxTranslateX * 2) - maxTranslateX;
+            bgY = (Math.random() * maxTranslateY * 2) - maxTranslateY;
+            const scale = Math.random() * (maxScale - minScale) + minScale;
+            const rotate = (Math.random() * maxRotation * 2) - maxRotation;
+
+            bg.style.transform = `translate(${bgX}px, ${bgY}px) scale(${scale}) rotate(${rotate}deg)`;
+        }
+
+        function createCircle() {
+            const circle = document.createElement("div");
+            circle.classList.add("circle");
+            const size = Math.random() * 5 + 2;
+            const opacity = Math.random();
+            const speed = Math.random() * 3 + 2; // Vitesse entre 2s et 5s
+            circle.style.width = `${size}px`;
+            circle.style.height = `${size}px`;
+            circle.style.opacity = opacity;
+            circle.style.transition = `all ${speed}s ease-in-out`;
+
+            const top = { x: Math.random() * window.innerWidth, y: -20 };
+            const bottom = { x: Math.random() * window.innerWidth, y: window.innerHeight + 20 };
+            const left = { x: -20, y: Math.random() * window.innerHeight };
+            const right = { x: window.innerWidth + 20, y: Math.random() * window.innerHeight };
+
+            const positions = [top, bottom, left, right];
+            const startPos = positions[Math.floor(Math.random() * positions.length)];
+
+            circle.style.left = `${startPos.x}px`;
+            circle.style.top = `${startPos.y}px`;
+            document.body.appendChild(circle);
+
+            setTimeout(() => {
+                circle.style.left = `calc(50% + ${bgX}px)`;
+                circle.style.top = `calc(50% + ${bgY}px)`;
+                circle.style.opacity = "0";
+
+                setTimeout(() => {
+                    circle.remove();
+                }, speed * 1000);
+            }, 50);
+        }
+
+        setInterval(createCircle, 0.1);
+
+        setInterval(animateBackground, 6000);
+    </script>
+</body>
+</html>

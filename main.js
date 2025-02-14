@@ -132,7 +132,52 @@ function generateStars(numberOfPoints) {
   }
 }
 
+function createCircle() {
+  const svgCanvas = document.getElementById("svgCanvas");
+  const circle = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "circle"
+  );
+  circle.setAttribute("r", 5);
+  circle.setAttribute("fill", "white");
+  
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight / 2;
+  let angle = Math.random() * 2 * Math.PI;
+  let distance = Math.max(window.innerWidth, window.innerHeight);
+  let startX = targetX + Math.cos(angle) * distance;
+  let startY = targetY + Math.sin(angle) * distance;
+  console.log(targetX, targetY);
+  let initialRadius = 5;
+
+  circle.setAttribute("r", initialRadius);
+  circle.setAttribute("cx", startX);
+  circle.setAttribute("cy", startY);
+  svgCanvas.appendChild(circle);
+  
+  let speed = 1 + Math.random() * 3;
+  function animate() {
+      let cx = parseFloat(circle.getAttribute("cx"));
+      let cy = parseFloat(circle.getAttribute("cy"));
+      let radius = parseFloat(circle.getAttribute("r"));
+      let dx = targetX - cx;
+      let dy = targetY - cy;
+      let dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 5) {
+        svgCanvas.removeChild(circle);
+          return;
+      }
+      circle.setAttribute("cx", cx + (dx / dist) * speed);
+      circle.setAttribute("cy", cy + (dy / dist) * speed);
+      circle.setAttribute("r", Math.max(radius - 0.05, 0.5));
+      requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+
 generateStars(10000);
 const img = document.getElementById("bouncingImage");
 const animation = new CustomAnimation(img, 0.5, 100, 2000, 1, 0.1);
 animation.run(100);
+setInterval(createCircle, 30);

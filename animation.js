@@ -108,7 +108,7 @@ function generateRandomPoint() {
   // Position aléatoire dans les dimensions de l'écran
   const x = Math.random() * screenWidth;
   const y = Math.random() * screenHeight;
-  const opacity = Math.random();
+  const opacity = Math.random() * 0.25;
 
   // Création du cercle SVG
   const circle = document.createElementNS(
@@ -128,7 +128,7 @@ function generateRandomPoint() {
 // Fonction pour générer plusieurs points sur l'écran à intervalles réguliers
 function generatePoints() {
   // Générer 100 points aléatoires
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 3000; i++) {
     generateRandomPoint();
   }
 }

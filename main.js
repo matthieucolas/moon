@@ -1,10 +1,13 @@
-const canvas = document.getElementById("particleCanvas");
-const acanvas = document.getElementById("audioCanvas");
-const ctx = canvas.getContext("2d");
-const actx = acanvas.getContext("2d");
+const animationStar = document.getElementById("particleCanvas");
+const starsBackground = document.getElementById("starsBackground");
+const animationStarCtx = animationStar.getContext("2d");
+const starsBackgroundCtx = starsBackground.getContext("2d");
+const img = document.getElementById("bouncingImage");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+animationStar.width = window.innerWidth;
+animationStar.height = window.innerHeight;
+starsBackground.width = window.innerWidth;
+starsBackground.height = window.innerHeight;
 
 const particles = [];
 const numParticlesPerFrame = 1; // Nombre de particules créées à chaque frame
@@ -32,35 +35,13 @@ class Particle {
     this.y += this.vy;
   }
 
-  draw() {
+  draw(ctx) {
     ctx.globalAlpha = this.alpha;
     ctx.fillStyle = this.color;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
   }
-}
-
-function drawWave() {
-  actx.clearRect(0, 0, acanvas.width, acanvas.height);
-  actx.lineWidth = 2;
-  
-  for (let i = 0; i < waveCount; i++) {
-      actx.beginPath();
-      actx.strokeStyle = `hsl(${i * 60}, 100%, 50%)`;
-      
-      for (let x = 0; x < acanvas.width; x++) {
-          let y = acanvas.height / 2 + Math.sin(x * frequency + time + i) * amplitude * (1 - i / waveCount);
-          if (x === 0) {
-              actx.moveTo(x, y);
-          } else {
-              actx.lineTo(x, y);
-          }
-      }
-      actx.stroke();
-  }
-  time += 0.05;
-  requestAnimationFrame(drawWave);
 }
 
 function createParticles() {
@@ -71,8 +52,8 @@ function createParticles() {
     let color = `#FFFF00`;
     particles.push(
       new Particle(
-        canvas.width / 2,
-        canvas.height / 2,
+        animationStar.width / 2,
+        animationStar.height / 2,
         speed,
         angle,
         size,
@@ -83,18 +64,18 @@ function createParticles() {
 }
 
 function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  animationStarCtx.clearRect(0, 0, animationStar.width, animationStar.height);
   createParticles();
   particles.forEach((particle, index) => {
     particle.update();
-    particle.draw();
+    particle.draw(animationStarCtx);
 
     const outOfScreen = (particle) => {
       return (
         particle.x < 0 ||
-        particle.x > canvas.width ||
+        particle.x > animationStar.width ||
         particle.y < 0 ||
-        particle.y > canvas.height
+        particle.y > animationStar.height
       );
     }
 
@@ -109,14 +90,7 @@ function init() {
   animate();
 }
 
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-
-init();
-
-class CustomAnimation {
+class MoonAnimation {
   element;
   currentPosition;
   targetPosition;
@@ -221,45 +195,34 @@ class CustomAnimation {
   }
 }
 
-class Star {
-  size;
-  color;
-  opacity;
-  x;
-  y;
-
-  constructor() {
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-    this.size = Math.random();
-    this.color = "#FFFFFF";
-    this.opacity = Math.random() * 0.25;
-    this.x = Math.random() * screenWidth;
-    this.y = Math.random() * screenHeight;
-  }
-
-  create() {
-    const circle = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "circle"
-    );
-    circle.setAttribute("cx", this.x);
-    circle.setAttribute("cy", this.y);
-    circle.setAttribute("r", this.size);
-    circle.setAttribute("opacity", this.opacity);
-    circle.setAttribute("fill", this.color);
-    return circle;
-  }
-}
-
 function generateStars(numberOfPoints) {
-  const svgCanvas = document.getElementById("svgCanvas");
+
   for (let i = 0; i < numberOfPoints; i++) {
-    const star = new Star().create();
-    svgCanvas.appendChild(star);
+    let speed = 0;
+    let angle = 0;
+    let size = Math.random();
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight;
+    let color = `#FFFFFF`;
+    const particle = new Particle(
+      x,
+      y,
+      speed,
+      angle,
+      size,
+      color
+    );
+    particle.alpha = Math.random();
+    particle.draw(starsBackgroundCtx);
   }
 }
 
+
+window.addEventListener("resize", () => {
+  animationStar.width =  starsBackground.width = window.innerWidth;
+  animationStar.height = starsBackground.height = window.innerHeight;
+});
+
+init();
 generateStars(10000);
-const img = document.getElementById("bouncingImage");
-new CustomAnimation(img, 0.2, 500, 2000, 0.5, 0.08).run(100);
+new MoonAnimation(img, 0.2, 500, 2000, 0.5, 0.08).run(100);

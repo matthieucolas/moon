@@ -46,15 +46,17 @@
             pointer-events: none; /* Les clics ne seront pas affectés par les points */
         }
         canvas{
+            position: absolute;
+            height: 100%;
+            width: 100%;
             display: block;
         }
     </style>
 </head>
 
 <body class="frame">
+    <canvas id="starsBackground"></canvas>
     <canvas id="particleCanvas"></canvas>
-    <canvas id="audioCanvas"></canvas>
-    <svg id="svgCanvas"></svg>
     <img src="moon-background.png"
          class="bouncingImage"
          id="bouncingImage">

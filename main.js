@@ -107,23 +107,17 @@ class MoonAnimation {
   constructor(
     element,
     translationSpeed,
-    minSize,
-    maxSize,
-    sizeChangeSpeed,
     rotationSpeed
   ) {
     this.element = element;
     this.translationSpeed = translationSpeed;
-    this.minSize = minSize;
-    this.maxSize = maxSize;
-    this.sizeChangeSpeed = sizeChangeSpeed;
     this.rotationSpeed = rotationSpeed;
     this.targetPosition = this.getRandomPosition();
     this.currentPosition = {
-      x: this.element.offsetLeft + this.element.width / 2,
-      y: this.element.offsetTop + this.element.height / 2,
+      x: this.element.offsetLeft + this.element.offsetWidth / 2,
+      y: this.element.offsetTop + this.element.offsetHeight / 2,
     };
-    this.currentSize = this.element.width;
+    this.currentSize = this.element.offsetHeight;
   }
 
   getRandomPosition() {
@@ -158,26 +152,11 @@ class MoonAnimation {
       }
 
       this.element.style.left = `${
-        this.currentPosition.x - this.element.width / 2
+        this.currentPosition.x - this.element.offsetWidth / 2
       }px`;
       this.element.style.top = `${
-        this.currentPosition.y - this.element.height / 2
+        this.currentPosition.y - this.element.offsetHeight / 2
       }px`;
-
-      if (this.sizeChangeSpeed) {
-        if (this.growing) {
-          this.currentSize += this.sizeChangeSpeed;
-          if (this.currentSize >= this.maxSize) {
-            this.growing = false;
-          }
-        } else {
-          this.currentSize -= this.sizeChangeSpeed;
-          if (this.currentSize <= this.minSize) {
-            this.growing = true;
-          }
-        }
-        this.element.style.width = `${this.currentSize}px`;
-      }
 
       if (this.rotationSpeed) {
         this.currentRotation += this.rotationSpeed;
@@ -224,5 +203,5 @@ window.addEventListener("resize", () => {
 });
 
 init();
-generateStars(10000);
-new MoonAnimation(img, 0.2, 500, 2000, 0.5, 0.08).run(100);
+generateStars(5000);
+new MoonAnimation(img, 0.5, 0.08).run(100);

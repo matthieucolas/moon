@@ -1,10 +1,8 @@
 {
   "name": "Moon",
-  "version": "0.0.0-PLACEHOLDER",
   "private": true,
   "repository": {
-    "type": "git",
-    "url": "https://suezsmartsolutions.visualstudio.com/_git/Aquaviz"
+    "type": "git"
   },
   "scripts": {
     "start": "nx serve --port 4201",

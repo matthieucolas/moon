@@ -15,8 +15,7 @@
       "cache": true,
       "inputs": [
         "default",
-        "^production",
-        "{workspaceRoot}/karma.conf.js"
+        "^production"
       ]
     }
   },
@@ -30,8 +29,7 @@
     "production": [
       "default",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/**/*.spec.[jt]s",
-      "!{projectRoot}/karma.conf.js"
+      "!{projectRoot}/**/*.spec.[jt]s"
     ]
   }
 }

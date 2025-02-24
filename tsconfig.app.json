@@ -1,14 +1,10 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./out-tsc/demo",
-    "types": []
-  },
   "files": [
-    "demo/main.ts",
-    "demo/polyfills.ts"
+    "src/main.ts",
+    "src/polyfills.ts"
   ],
   "include": [
-    "demo/**/*.d.ts"
+    "src/**/*.d.ts"
   ]
 }

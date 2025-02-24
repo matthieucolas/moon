@@ -4,7 +4,6 @@
             <feGaussianBlur stdDeviation="4"/>
         </filter>
     </defs>
-    
     <mask id="moonMask">
         <rect width="200" height="200" fill="white"/>
         <ellipse id="shadow" cx="100" cy="100" rx="100" ry="100" fill="#353535" filter="url(#blur)">
@@ -14,13 +13,12 @@
     </mask>
     
     <image href="../../assets/moon-background.png" x="0" y="0" width="200" height="200" mask="url(#moonMask)">
-
         <animateTransform
             attributeName="transform"
             type="translate"
             additive="sum"
-            from="-200"
-            to="250"
+            from="-210"
+            to="310"
             [attr.dur]="globalAnimationTime"
             repeatCount="indefinite" />
         

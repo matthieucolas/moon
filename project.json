@@ -1,23 +1,23 @@
 {
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "name": "moon",
-  "sourceRoot": "demo",
+  "sourceRoot": "src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "options": {
-        "outputPath": "dist/demo",
-        "index": "demo/index.html",
-        "main": "demo/main.ts",
+        "outputPath": "dist",
+        "index": "src/index.html",
+        "main": "src/main.ts",
         "tsConfig": "tsconfig.app.json",
-        "polyfills": "demo/polyfills.ts",
+        "polyfills": "src/polyfills.ts",
         "assets": [
-          "demo/assets",
-          "demo/favicon.ico"
+          "src/assets",
+          "src/favicon.ico"
         ],
         "styles": [
-          "./demo/styles.scss"
+          "./src/styles.scss"
         ],
         "allowedCommonJsDependencies": [
           "lodash"
@@ -35,8 +35,8 @@
           "outputHashing": "all",
           "fileReplacements": [
             {
-              "replace": "demo/environments/environment.ts",
-              "with": "demo/environments/environment.prod.ts"
+              "replace": "src/environments/environment.ts",
+              "with": "src/environments/environment.prod.ts"
             }
           ]
         },

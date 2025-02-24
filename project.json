@@ -1,0 +1,77 @@
+{
+  "$schema": "node_modules/nx/schemas/project-schema.json",
+  "name": "moon",
+  "sourceRoot": "demo",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/demo",
+        "index": "demo/index.html",
+        "main": "demo/main.ts",
+        "tsConfig": "tsconfig.app.json",
+        "polyfills": "demo/polyfills.ts",
+        "assets": [
+          "demo/assets",
+          "demo/favicon.ico"
+        ],
+        "styles": [
+          "./demo/styles.scss"
+        ],
+        "allowedCommonJsDependencies": [
+          "lodash"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "tsconfig.app.prod.json",
+          "budgets": [
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb"
+            }
+          ],
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "demo/environments/environment.ts",
+              "with": "demo/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production",
+      "outputs": [
+        "{options.outputPath}"
+      ]
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "moon:build:production"
+        },
+        "development": {
+          "browserTarget": "moon:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "moon:build"
+      }
+    }
+  },
+  "tags": ["scope:moon"]
+}

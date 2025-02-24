@@ -1,0 +1,37 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter id="blur">
+            <feGaussianBlur stdDeviation="4"/>
+        </filter>
+    </defs>
+    
+    <mask id="moonMask">
+        <rect width="200" height="200" fill="white"/>
+        <ellipse id="shadow" cx="100" cy="100" rx="100" ry="100" fill="#353535" filter="url(#blur)">
+            <animate attributeName="cx" from="300" to="-100" [attr.dur]="cycleAnimationTime" repeatCount="indefinite"/>
+        </ellipse>
+        
+    </mask>
+    
+    <image href="../../assets/moon-background.png" x="0" y="0" width="200" height="200" mask="url(#moonMask)">
+
+        <animateTransform
+            attributeName="transform"
+            type="translate"
+            additive="sum"
+            from="-200"
+            to="250"
+            [attr.dur]="globalAnimationTime"
+            repeatCount="indefinite" />
+        
+        <animateTransform
+            attributeName="transform"
+            type="scale"
+            additive="sum"
+            from="0.5"
+            to="2"
+            [attr.dur]="globalAnimationTime"
+            repeatCount="indefinite" />
+        
+    </image>
+</svg>

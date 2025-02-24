@@ -1,0 +1,10 @@
+<!-- 
+    The version should be updated everytime a new release branch is created (following git flow)
+    The versionning should follow semver specification
+    The version is used during the build pipeline to specify the artifact binaries version
+ -->
+<Project>
+  <PropertyGroup>
+    <AppVersion>4.9.0</AppVersion>
+  </PropertyGroup>
+</Project>

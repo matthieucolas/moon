@@ -1,0 +1,40 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "editor.tabSize": 4,
+    "files.exclude": {
+        "dist/": true,
+        "node_modules/": true,
+        "packages/core/tmp/": true,
+        "packages/core/node_modules/": true,
+        "packages/dashboard/tmp/": true,
+        "packages/dashboard/node_modules/": true,
+        "packages/shell/tmp/": true,
+        "packages/shell/node_modules/": true,
+        "packages/workspace/tmp/": true,
+        "packages/workspace/node_modules/": true,
+    },
+    "git.ignoreLimitWarning": true,
+    "editor.formatOnSave": false,
+    "editor.autoIndent": "full",
+    "scss.lint.duplicateProperties": "warning",
+    "scss.lint.float": "warning",
+    "scss.lint.idSelector": "error",
+    "scss.lint.important": "warning",
+    "scss.lint.universalSelector": "error",
+    "html.format.wrapAttributes": "force-aligned",
+    "tslint.jsEnable": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.tslint": "explicit"
+    },
+    "search.exclude": {
+        "dist/": true,
+        "**/node_modules": true,
+    },
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "typescript.preferences.quoteStyle": "single",
+    "path-intellisense.extensionOnImport": true,
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "cSpell.words": [
+        "aqvz"
+    ]
+}

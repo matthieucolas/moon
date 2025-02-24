@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MoonComponentModule } from '../components/moon/moon.component.module';
 import { ParticleCanvasModule } from '../components/particle/particle.module';
+import { HttpClientModule } from '@angular/common/http';
 
 /**
  * Needed modules for the app root
@@ -16,7 +17,8 @@ import { ParticleCanvasModule } from '../components/particle/particle.module';
         BrowserAnimationsModule,
         CommonModule,
         MoonComponentModule,
-        ParticleCanvasModule
+        ParticleCanvasModule,
+        HttpClientModule 
     ],
     declarations: [
         AppComponent,

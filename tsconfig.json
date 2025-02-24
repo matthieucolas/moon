@@ -17,8 +17,6 @@
       "resolveJsonModule": true,
       "allowSyntheticDefaultImports": true,
       "noImplicitAny": false,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
       "lib": [
         "es2020",
         "dom"

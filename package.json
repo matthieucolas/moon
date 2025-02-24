@@ -6,7 +6,10 @@
   },
   "scripts": {
     "start": "nx serve --port 4201",
-    "build": "nx build"
+    "nx-build": "nx build",
+    "copy": "cpx src/packfiles/**/*.* dist/",
+    "build": "npm-run-all nx-build copy pkg",
+    "pkg": "cd dist && pkg . --targets node18-win-x64 --output moon"
   },
   "dependencies": {
     "@angular/animations": "16.2.11",

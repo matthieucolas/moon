@@ -7,21 +7,14 @@
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "options": {
-        "outputPath": "dist",
+        "outputPath": "dist/public",
         "index": "src/index.html",
         "main": "src/main.ts",
         "tsConfig": "tsconfig.app.json",
         "polyfills": "src/polyfills.ts",
-        "assets": [
-          "src/assets",
-          "src/favicon.ico"
-        ],
-        "styles": [
-          "./src/styles.scss"
-        ],
-        "allowedCommonJsDependencies": [
-          "lodash"
-        ]
+        "assets": ["src/assets"],
+        "styles": ["./src/styles.scss"],
+        "allowedCommonJsDependencies": ["lodash"]
       },
       "configurations": {
         "production": {
@@ -50,9 +43,7 @@
         }
       },
       "defaultConfiguration": "production",
-      "outputs": [
-        "{options.outputPath}"
-      ]
+      "outputs": ["{options.outputPath}"]
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",

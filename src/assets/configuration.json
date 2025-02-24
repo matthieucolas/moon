@@ -1,0 +1,14 @@
+{
+    "moonCycleAnimationDuration": 60,
+    "moonTranslateAnimationDuration": 120,
+    "numberOfStaticStars": 5000,
+    "maxNumberOfShootingStars": 200,
+    "moonRotationAnimationDuration": 60,
+    "moonImages": [
+        "moon-background.png",
+        "moon-background1.png",
+        "moon-background2.png",
+        "moon-background3.png",
+        "moon-background4.png"
+    ]
+}

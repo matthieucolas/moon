@@ -1,0 +1,18 @@
+{
+    "name": "moon-server",
+    "version": "1.0.0",
+    "description": "Un serveur web avec http-server",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "bin": "server.js",
+    "dependencies": {
+      "http-server": "^14.1.1"
+    },
+    "pkg": {
+        "scripts": "public/**/*",
+        "assets": "public/**/*"
+    }
+  }
+  

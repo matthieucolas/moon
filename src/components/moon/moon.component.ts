@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { interval, map, Subscription } from 'rxjs';
+import { IMG_LOCATION } from '../../services/path.helper';
 
 @Component({
     selector: 'moon',
@@ -6,15 +8,41 @@ import { Component, Input, OnInit } from '@angular/core';
     styleUrls: ['moon.component.scss']
 })
 
-export class MoonComponent implements OnInit {
+export class MoonComponent implements OnInit, OnDestroy {
     @Input()
-    public duration: number;
+    public moonTranslateAnimationDuration: number;
+    public translateDuration: string;
     
-    public globalAnimationTime: string;
-    public cycleAnimationTime: string;
+    @Input()
+    public moonCycleAnimationDuration: number;
+    public cycleDuration: string;
+
+    @Input()
+    public moonRotationAnimationDuration: number;
+    public rotationDuration: string;
+
+    @Input()
+    public imgSources: string[];
+    public imgSrc: string;
+    private subscription: Subscription;
 
     ngOnInit(): void {
-        this.globalAnimationTime = `${this.duration}s`;
-        this.cycleAnimationTime = `${this.duration * 0.5}s`; 
+        this.translateDuration = `${this.moonTranslateAnimationDuration}s`;
+        this.cycleDuration = `${this.moonCycleAnimationDuration}s`;
+        this.rotationDuration = `${this.moonRotationAnimationDuration}s`;
+        this.imgSrc = `${IMG_LOCATION}${this.imgSources[0]}`;
+        const changeImageTime = this.moonTranslateAnimationDuration * 1000; 
+
+        this.subscription = interval(changeImageTime).pipe(
+            map(index => (this.imgSources[index % this.imgSources.length]))
+        ).subscribe(src => {
+            this.imgSrc = src;
+        });
+    }
+
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 }

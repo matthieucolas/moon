@@ -1,13 +1,18 @@
-<div class="frame">
-    <particle-canvas [numParticlesPerAnimationFrame]="5000"
-                     [particleConfigGetter]="staticStarBackgroundParticleConfig"></particle-canvas>
-    <particle-canvas [numParticlesPerAnimationFrame]="10"
-                     [maxParticleNumber]="500"
-                     [animation]="true"
-                     [particleConfigGetter]="animatedStarBackgroundParticleConfig"></particle-canvas>
-    <moon class="moon"
-          [duration]="30"></moon>
-    <div class="title">
-        <img src="../assets/txt.svg" />
+<ng-container *ngIf="configuration | async as vm">
+    <div class="frame">
+        <particle-canvas [numParticlesPerAnimationFrame]="vm.numberOfStaticStars"
+                         [particleConfigGetter]="staticStarBackgroundParticleConfig"></particle-canvas>
+        <particle-canvas [numParticlesPerAnimationFrame]="10"
+                         [maxParticleNumber]="vm.maxNumberOfShootingStars"
+                         [animation]="true"
+                         [particleConfigGetter]="animatedStarBackgroundParticleConfig"></particle-canvas>
+        <moon class="moon"
+              [imgSources]="vm.moonImages"
+              [moonRotationAnimationDuration]="vm.moonRotationAnimationDuration"
+              [moonCycleAnimationDuration]="vm.moonCycleAnimationDuration"
+              [moonTranslateAnimationDuration]="vm.moonTranslateAnimationDuration"></moon>
+        <div class="title">
+            <img src="../assets/txt.svg" />
+        </div>
     </div>
-</div>
+</ng-container>

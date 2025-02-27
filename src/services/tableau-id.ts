@@ -1,0 +1,1 @@
+export type TableauId = 'moon1' | 'moon2'

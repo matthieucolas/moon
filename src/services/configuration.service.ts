@@ -1,30 +1,50 @@
 import { inject, Injectable } from '@angular/core';
-import { map, Subject } from 'rxjs';
-import { Configuration } from './configuration';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { TableauConfiguration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 import { IMG_LOCATION } from './path.helper';
+import { TableauId } from './tableau-id';
 
 @Injectable({providedIn: 'root'})
 export class ConfigurationService {
     
-    public configuration$: Subject<Configuration> = new Subject();
+    public configuration$: BehaviorSubject<TableauConfiguration> = new BehaviorSubject(null);
     private httpClient: HttpClient = inject(HttpClient);
+    private configuration: Map<TableauId, TableauConfiguration> = new Map();
 
     constructor(){
-        this.httpClient.get<Configuration>('assets/configuration.json').pipe(
-            map(configuration => this.addPathToImages(configuration))
+        this.httpClient.get<TableauConfiguration[]>('assets/configuration.json').pipe(
         ).subscribe(
             {
-                next: (configuration: Configuration) => this.configuration$.next(configuration),
+                next: (configuration: TableauConfiguration[]) => this.parseConfiguration(configuration),
                 error: (error: any) => console.error('Error loading configuration', error)
             }
         );
     }
 
-    public addPathToImages(configuration: Configuration): Configuration {
-        return {
-            ...configuration,
-            moonImages: configuration.moonImages.map(image => `${IMG_LOCATION}${image}`)
-        };
+    public loadNextTableau(){
+        const currentConfiguration = this.configuration$.value;
+        const currentConfigurationIndex = Array.from(this.configuration.keys()).indexOf(currentConfiguration.id);
+        const nextConfigurationIndex = (currentConfigurationIndex + 1) % this.configuration.size;
+        const nextConfigurationId = Array.from(this.configuration.keys())[nextConfigurationIndex];
+        this.loadTableauConfiguration(nextConfigurationId);
+    }
+
+    public loadTableauConfiguration(id: TableauId) {
+        const configuration = this.configuration.get(id);
+        if(configuration){
+            this.configuration$.next(configuration);
+        } else {
+            console.error(`Configuration with id ${id} not found`);
+        }
+    }
+
+    private parseConfiguration(configuration: TableauConfiguration[]){
+        for(const config of configuration){
+            config.moonImageSrc = `${IMG_LOCATION}${config.moonImageSrc}`;
+            config.logoSrc = `${IMG_LOCATION}${config.logoSrc}`;
+            this.configuration.set(config.id, config);
+        }
+        this.loadTableauConfiguration(configuration[0].id);
     }
 }

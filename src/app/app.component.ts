@@ -1,9 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { ParticleConfig } from '../components/particle/particle';
 import { ConfigurationService } from '../services/configuration.service';
-import { Configuration } from '../services/configuration';
-import { map, Observable, Subject } from 'rxjs';
+import { TableauConfiguration } from '../services/configuration';
+import { Observable } from 'rxjs';
  
+export interface NavigationEvent {
+    action: () => void; // The action to be executed when the event is triggered
+}
+
+export type NavigationEventKey = 'ArrowLeft' | 'ArrowRight';
+
 /**
  * The demo app Component that carries the entire app
  */
@@ -17,13 +23,19 @@ export class AppComponent {
     private configurationService: ConfigurationService = inject(ConfigurationService);
     public staticStarBackgroundParticleConfig: (canvas: HTMLCanvasElement) => ParticleConfig;
     public animatedStarBackgroundParticleConfig: (canvas: HTMLCanvasElement) => ParticleConfig;
-    public configuration: Observable<Configuration>;
-    public moonImgAnimator: Subject<string[]> = new Subject();
-    public moonImg: Observable<string>;
-    public moonImages: string[];
+    public configuration: Observable<TableauConfiguration>;
+    private navigationEvents: Map<NavigationEventKey, NavigationEvent> = new Map();
 
     constructor() {
         this.configuration = this.configurationService.configuration$;
+
+        this.navigationEvents.set('ArrowRight', {
+            action: this.handleArrowRight.bind(this)
+        });
+
+        this.navigationEvents.set('ArrowLeft', {
+            action: this.handleArrowLeft.bind(this)
+        })
 
         this.staticStarBackgroundParticleConfig = (canvas: HTMLCanvasElement) => ({
             alpha: Math.random(),
@@ -33,12 +45,38 @@ export class AppComponent {
             y: canvas.height * Math.random(),
         });
 
+        
         this.animatedStarBackgroundParticleConfig = (canvas: HTMLCanvasElement) => ({
             alpha: Math.random(),
             size: Math.random() * 2,
-            speed: Math.random() * 10,
-            x: canvas.width / 2,
-            y: canvas.height / 2,
+            speed: Math.random() + 0.1,
+            ...this.computePossibleStartPositions(canvas),
         });
+
+    }
+
+    private computePossibleStartPositions(canvas: HTMLCanvasElement): { x: number, y: number } {
+        const possibleStartPositions = [
+            { x: 0, y: 0 },
+            { x: 0, y: canvas.height},
+            { x: canvas.width, y: 0 },
+            { x: canvas.width, y: canvas.height }
+        ]
+
+        return possibleStartPositions[Math.floor(Math.random() * possibleStartPositions.length)];
+    }
+
+    @HostListener('window:keydown', ['$event'])
+    public handleKeydown(event: KeyboardEvent) {
+        const nav = this.navigationEvents.get(event.key as NavigationEventKey);
+        nav?.action();
+    }
+
+    private handleArrowRight() {
+        this.configurationService.loadNextTableau();
+    }
+
+    private handleArrowLeft() {
+        this.configurationService.loadTableauConfiguration('moon1');
     }
 }

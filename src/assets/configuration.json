@@ -1,14 +1,25 @@
-{
-    "moonCycleAnimationDuration": 60,
-    "moonTranslateAnimationDuration": 120,
-    "numberOfStaticStars": 5000,
-    "maxNumberOfShootingStars": 200,
-    "moonRotationAnimationDuration": 60,
-    "moonImages": [
-        "moon-background.png",
-        "moon-background1.png",
-        "moon-background2.png",
-        "moon-background3.png",
-        "moon-background4.png"
-    ]
-}
+[
+    {
+        "id": "moon1",
+        "moonCycleAnimationDuration": 60,
+        "moonTranslateAnimationDuration": 120,
+        "numberOfStaticStars": 5000,
+        "maxNumberOfShootingStars": 2000,
+        "moonRotationAnimationDuration": 60,
+        "moonChangeImageTime": 120,
+        "moonImageSrc": "moon-background.png",
+        "logoSrc":"txt.svg"
+
+    },
+    {
+        "id": "moon2",
+        "moonCycleAnimationDuration": 60,
+        "moonTranslateAnimationDuration": 120,
+        "numberOfStaticStars": 5000,
+        "maxNumberOfShootingStars": 2000,
+        "moonRotationAnimationDuration": 60,
+        "moonChangeImageTime": 120,
+        "moonImageSrc": "moon-background2.png",
+        "logoSrc":"txt2.svg"
+    }
+]
